@@ -49,22 +49,19 @@ app.get('/posts', function(request, response) {
       response.render("posts", {posts: posts});
     }
   });
-
-  //response.render("posts");
-  //response.send("/posts SHOW");
 });
 
 app.get('/posts/new', function(request, response) {
-  response.send("/posts/new NEW");
+  response.render("posts-new");
 });
 
 app.get('/posts/:id', function(request, response) {
-  var posts = [
+  /*var posts = [
     { title: "Blog Post #1", image: "https://cdn.lynda.com/course/520220/520220-636136853521823826-16x9.jpg", subheading: "First blog post ever!", content: "Blah blah blah this is a blog posts xD", tags: ["yeet", "yote"] },
     { title: "Blog Post #2", image: "https://www.un.org/development/desa/capacity-development/wp-content/uploads/sites/66/2017/12/DESA-and-China-on-science-and-technology-848x463.jpg", subheading: "Second blog post ever!", content: "Blah blah blah this is another blog post", tags: ["yeet", "fun"] }
-  ];
+  ];*/
 
-  response.send("/posts/:id SHOW")
+  //response.send("/posts/:id SHOW")
   //response.render("posts", {posts:posts});
 });
 
@@ -72,8 +69,15 @@ app.get('/posts/:id/edit', function(request, response) {
   response.send("/posts/:id/edit EDIT");
 });
 
-app.post('/posts/:id', function(request, response) {
-  response.send("/posts/:id UPDATE");
+app.post('/posts', function(request, response) {
+  // Create post
+  Post.create(request.body.post, function(err, newPost) {
+    if (err) {
+      response.render("posts-new");
+    } else {
+      response.redirect("/posts");
+    }
+  });
 });
 
 /*app.post('/posts', function(request, response) {

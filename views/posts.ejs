@@ -1,0 +1,16 @@
+<% include partials/header %>
+<% posts.forEach(function(post) {%>
+  <div class="posts-container">
+    <img src="<%= post.image %>">
+    <div class="post">
+      <h2><%= post.title %></h2>
+      <h3><%= post.subheading %></h3>
+      <span><%= post.created %></span>
+      <p><%= post.content %></p>
+      <% post.tags.forEach(function(tag) {%>
+        <%= tag %>&nbsp;
+      <% }) %>
+    </div>
+  </div>
+<% }) %>
+<% include partials/footer %>

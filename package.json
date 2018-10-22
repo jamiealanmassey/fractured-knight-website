@@ -9,7 +9,8 @@
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "method-override": "^3.0.0",
-    "mongoose": "^5.3.4"
+    "mongoose": "^5.3.4",
+    "sanitize-html": "^1.19.1"
   },
   "devDependencies": {},
   "scripts": {

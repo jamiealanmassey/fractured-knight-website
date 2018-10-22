@@ -1,3 +1,4 @@
+var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var express = require('express');
@@ -8,6 +9,7 @@ mongoose.connect("mongodb://localhost/fractured-blog-db");
 app.set('view engine', 'ejs'); // Tells express to use ejs to render our web pages server-side
 app.use(express.static("public")); // Creates a static directory in 'public' that is unchanging
 app.use(bodyParser.urlencoded({extended: true})); // Sets up body parser for RESTful APIs
+app.use(methodOverride('_method'));
 
 // MONGOOSE
 // --------------------------------------
@@ -55,18 +57,48 @@ app.get('/posts/new', function(request, response) {
   response.render("posts-new");
 });
 
-app.get('/posts/:id', function(request, response) {
-  /*var posts = [
-    { title: "Blog Post #1", image: "https://cdn.lynda.com/course/520220/520220-636136853521823826-16x9.jpg", subheading: "First blog post ever!", content: "Blah blah blah this is a blog posts xD", tags: ["yeet", "yote"] },
-    { title: "Blog Post #2", image: "https://www.un.org/development/desa/capacity-development/wp-content/uploads/sites/66/2017/12/DESA-and-China-on-science-and-technology-848x463.jpg", subheading: "Second blog post ever!", content: "Blah blah blah this is another blog post", tags: ["yeet", "fun"] }
-  ];*/
+/*app.get('/posts/:id', function(request, response) {
 
-  //response.send("/posts/:id SHOW")
-  //response.render("posts", {posts:posts});
-});
+});*/
 
 app.get('/posts/:id/edit', function(request, response) {
-  response.send("/posts/:id/edit EDIT");
+  Post.findOne({_id: request.params.id}, function(err, post) {
+    if (err) {
+      console.log("/posts/:id/edit GET failed");
+    } else {
+      response.render("posts-edit", {post: post});
+    }
+  });
+});
+
+app.put('/posts/:id/edit', function(request, response, next) {
+  Post.findOneAndUpdate({"_id" : request.params.id},
+      { "$set" :
+        {
+         "title" : request.body.post.title,
+         "subheading" : request.body.post.subheading,
+         "image" : request.body.post.image,
+         "content" : request.body.post.content
+        }
+      }
+    ).exec(function(err, post) {
+    if(err) {
+      console.log(err);
+      response.status(500).send(err);
+    } else {
+      response.redirect("/posts");
+    }
+  });
+});
+
+app.delete('/posts/:id', function(request, response) {
+  Post.deleteOne({_id : request.params.id}, function(err) {
+    if (err) {
+      response.status(500).send(err);
+    } else {
+      response.redirect("/posts");
+    }
+  });
 });
 
 app.post('/posts', function(request, response) {
@@ -79,10 +111,6 @@ app.post('/posts', function(request, response) {
     }
   });
 });
-
-/*app.post('/posts', function(request, response) {
-  response.send("/posts CREATE");
-});*/
 
 // APP START
 // --------------------------------------

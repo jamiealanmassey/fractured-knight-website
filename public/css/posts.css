@@ -52,6 +52,21 @@ body {
   background-color: #151515;
 }
 
+.posts-buttons {
+  margin-top: 30px;
+  float: right;
+}
+
+.posts-buttons .button {
+  margin-right: 8px;
+}
+
+.posts-buttons form {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
 #footer-container {
   width: 100%;
   background-color: #151515;

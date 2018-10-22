@@ -2,7 +2,7 @@
 <% include partials/header-nav %>
 <% posts.forEach(function(post) {%>
   <div class="posts-container">
-    <img src="<%= post.image %>">
+    <img src="<%=post.image%>">
     <div class="post">
       <h2><%= post.title %></h2>
       <h3><%= post.subheading %></h3>
@@ -12,6 +12,16 @@
       <% post.tags.forEach(function(tag) {%>
         <%= tag %>&nbsp;
       <% }) %>
+      <div class="posts-buttons">
+        <a href="/posts/<%=post._id%>/edit">
+          <div class="ui inverted button small blue">
+            Update Post
+          </div>
+        </a>
+        <form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+            <button class="ui inverted button small red">Delete Post</button>
+        </form>
+      </div>
     </div>
   </div>
 <% }) %>

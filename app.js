@@ -21,7 +21,8 @@ require('./models/post');
 
 // SETUP AUTHENTICATION
 // --------------------------------------
-require('./auth')
+require('./config/passport');
+require('./config/auth');
 
 // ROUTES
 // --------------------------------------

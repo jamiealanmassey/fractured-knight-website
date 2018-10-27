@@ -6,7 +6,16 @@
                 Fractured Knight Development Blog
             </div>
         </a>
-        <a href="/posts" class="item">Posts</a>
-        <a href="/posts/new" class="item">New Post</a>
+        <a class="item" href="/posts">Posts</a>
+        <a class="item" href="/posts/new">New Post</a>
+
+        <div class="right menu">
+            <% if (!currentUser) { %>
+                <a class="item" href="/login">Login</a>
+                <a class="item" href="/register">Register</a>
+            <% } else { %>
+                <a class="item" href="/logout">Logout</a>
+            <% } %>
+        </div>
     </div>
 </div>

@@ -18,11 +18,11 @@ Router.post('/register', function(request, response) {
     User.register(new User({ username: username, firstname: firstname, lastname: lastname }), password, function(error, user) {
         if (error) {
             console.log(error);
-            return res.render('register');
+            return response.render('register');
         }
 
         passport.authenticate('local')(request, response, function() {
-            response.redirect('/');
+            response.redirect('/posts');
         });
     });
 });
@@ -36,6 +36,11 @@ Router.post('/login', passport.authenticate('local', {
     failureRedirect: '/login'
 }), function(request, response) {
     // Callback
+});
+
+Router.get('/logout', function(request, response) {
+    request.logout();
+    response.redirect('/posts');
 });
 
 module.exports = Router;

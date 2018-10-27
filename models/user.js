@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
     password: String,
     firstname: String,
     lastname: String,
+    title: {type: String, default: ""},
+    bio: {type: String, default: ""},
     accessLevel: {type: String, default: "User"}
 });
 

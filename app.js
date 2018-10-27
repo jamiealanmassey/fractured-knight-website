@@ -23,6 +23,11 @@ app.use(methodOverride('_method')); // Tells express to use method-overriding e.
 app.use(passport.initialize()); // Sets up passport to be used by express as a plugin container
 app.use(passport.session()); // Starts the passport session to be used throughout website
 
+app.use(function(request, response, next) {
+    response.locals.currentUser = request.user;
+    next();
+});
+
 // MONGOOSE SCHEMAS
 // --------------------------------------
 var User = require('./models/user');

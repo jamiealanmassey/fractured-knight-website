@@ -6,8 +6,10 @@ const postSchema = new mongoose.Schema({
       image: {type: String, default: 'img/image-default.jpg'},
       content: String,
       created: {type: Date, default: Date.now},
-      author: String,
+      edited: {type: Date, default: Date.now},
+      editedBy: {type: String, default: ""}, // TODO: Make this an ID linked to a user
+      author: String, // TODO: Make this an ID linked to a user
       tags: [String]
 });
 
-mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Post', postSchema);

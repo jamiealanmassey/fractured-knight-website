@@ -1,0 +1,32 @@
+<% include partials/header %>
+        <div style="padding-top: 80px;">
+            <div class="ui main text basic container segment">
+                <div class="ui attached message">
+                    <div class="header">
+                        Login Form
+                    </div>
+                    <p>Enter your details below to login!</p>
+                </div>
+                <form class="ui form attached fluid segment" action="/login" method="POST">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="email" name="username" placeholder="E-mail Address" required />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="Password" required />
+                        </div>
+                    </div>
+                    <button class="ui fluid large blue submit button">Login</button>
+                </form>
+                <div class="ui bottom attached blue message">
+                    <i class="icon help"></i>
+                    Need an account? <b><a href="/register">Register</a></b>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,42 +1,41 @@
-const auth = require('../config/auth');
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const passport = require('passport');
 const express = require('express');
-const router = express.Router();
 
-app.post('/login', auth.optional, function(request, response, next) {
-    const { body: { user }} = request;
+const User = mongoose.model('User');
+const Router = express.Router();
 
-    if (!user.email) {
-        return response.status(422).json({
-            errors: {
-                email: 'is required',
-            },
-        });
-    }
-
-    if (!user.password) {
-        return response.status(422).json({
-            errors: {
-                password: 'is required';
-            },
-        });
-    }
-
-    return passport.authenticate('local', { session: false }, (error, passUser, info) => {
-        if (error) {
-            return next(error);
-        }
-
-        if (passUser) {
-            const user = passUser;
-            user.token = passUser.generateJWT();
-
-            return response.json({ user: user.toAuthJSON() });
-        }
-
-        return status(400).info;
-    })(request, response, next);
+Router.get('/register', function(request, response) {
+    response.render('register');
 });
 
-module.exports = router;
+Router.post('/register', function(request, response) {
+    var username = request.body.user.email.toLowerCase();
+    var password = request.body.user.password;
+    var firstname = request.body.user.firstname;
+    var lastname = request.body.user.lastname;
+
+    User.register(new User({ username: username, firstname: firstname, lastname: lastname }), password, function(error, user) {
+        if (error) {
+            console.log(error);
+            return res.render('register');
+        }
+
+        passport.authenticate('local')(request, response, function() {
+            response.redirect('/');
+        });
+    });
+});
+
+Router.get('/login', function(request, response) {
+    response.render('login');
+});
+
+Router.post('/login', passport.authenticate('local', {
+    successRedirect: '/posts',
+    failureRedirect: '/login'
+}), function(request, response) {
+    // Callback
+});
+
+module.exports = Router;

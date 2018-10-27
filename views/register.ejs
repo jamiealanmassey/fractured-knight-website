@@ -1,0 +1,44 @@
+<% include partials/header %>
+        <div style="padding-top: 80px;">
+            <div class="ui main text basic container segment">
+                <div class="ui attached message">
+                    <div class="header">
+                        Registration Form
+                    </div>
+                    <p>Fill out the form below to register for a new account</p>
+                </div>
+                <form class="ui form attached fluid segment" action="/register" method="POST">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="email" name="user[email]" placeholder="E-mail Address" required />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="user[password]" placeholder="Password" required />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="address card icon"></i>
+                            <input type="text" name="user[firstname]" placeholder="First Name" required />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="address card icon"></i>
+                            <input type="text" name="user[lastname]" placeholder="Last Name" required />
+                        </div>
+                    </div>
+                    <button class="ui fluid large blue submit button">Register</button>
+                </form>
+                <div class="ui bottom attached blue message">
+                    <i class="icon help"></i>
+                    Already have an account? <b><a href="/login">Login</a></b>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

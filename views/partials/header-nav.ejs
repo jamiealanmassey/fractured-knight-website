@@ -1,3 +1,4 @@
+<% console.log(currentUser) %>
 <div class="ui fixed inverted menu">
     <div class="ui container">
         <a href="/">
@@ -7,13 +8,18 @@
             </div>
         </a>
         <a class="item" href="/posts">Posts</a>
-        <a class="item" href="/posts/new">New Post</a>
+        <% if (currentUser && currentUser.accessLevel === "Admin") { %>
+            <a class="item" href="/posts/new">New Post</a>
+        <% } %>
 
         <div class="right menu">
             <% if (!currentUser) { %>
                 <a class="item" href="/login">Login</a>
                 <a class="item" href="/register">Register</a>
             <% } else { %>
+                <div class="header item">
+                    Welcome <%= currentUser.firstname %> <%= currentUser.lastname %>
+                </div>
                 <a class="item" href="/logout">Logout</a>
             <% } %>
         </div>

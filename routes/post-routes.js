@@ -63,11 +63,11 @@ function postRequest(request, response) {
 }
 
 function isAdminUser(request, response, next) {
-    if (request.isAuthenticated()) {
+    if ((request.user && request.user.accessLevel === "Admin") && request.isAuthenticated()) {
         return next();
     }
 
-    response.redirect('/login');
+    response.redirect('/posts');
 }
 
 router.get('/posts/new', isAdminUser, function(request, response) {

@@ -12,7 +12,7 @@
         <% post.tags.forEach(function(tag) {%>
         <%= tag %>&nbsp;
         <% }) %>
-        <% if (currentUser) { %>
+        <% if (currentUser && currentUser.accessLevel === "Admin") { %>
             <div class="posts-buttons">
                 <a href="/posts/<%=post._id%>/edit">
                     <div class="ui inverted button small blue">

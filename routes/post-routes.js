@@ -4,13 +4,16 @@ const express = require('express');
 const router = express.Router();
 
 function retrieveRequest(request, response) {
-    Post.find({}, function(error, posts) {
-        if (error) {
-            console.log("error");
-        } else {
-            response.render("posts", {posts: posts});
-        }
-    });
+    Post.find({})
+        .populate('author')
+        .populate('editedBy')
+        .exec(function(error, posts) {
+            if (error) {
+                console.log(JSON.stringify(posts, null, '\t'));
+            }
+
+            response.render('posts', { posts: posts });
+        });
 }
 
 function retrieveEditRequest(request, response) {
@@ -53,13 +56,20 @@ function deleteRequest(request, response) {
 }
 
 function postRequest(request, response) {
-    Post.create(request.body.post, function(error, post) {
+    Post.create({
+        image: request.body.post.image,
+        title: request.body.post.title,
+        subheading: request.body.post.subheading,
+        content: request.body.post.content,
+        editedBy: request.user._id,
+        author: request.user._id
+    }, function(error, post) {
         if (error) {
             response.render('posts-new');
         } else {
             response.redirect('/posts');
         }
-    })
+    });
 }
 
 function isAdminUser(request, response, next) {

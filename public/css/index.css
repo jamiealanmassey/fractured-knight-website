@@ -1,0 +1,34 @@
+html,
+body {
+    background-color: #1b1c1d;
+    color: #ffffff;
+}
+
+h1 {
+    letter-spacing: 4px;
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+h4 {
+    font-weight: normal;
+    font-size: 16px;
+    font-style: italic;
+    letter-spacing: 2px;
+}
+
+.container {
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.statistic {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+button {
+    padding-left: 20px;
+    padding-right: 20px;
+}

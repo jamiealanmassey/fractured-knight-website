@@ -85,6 +85,14 @@ function postRequest(request, response) {
     });
 }
 
+function isUser(request, response, next) {
+    if (request.isAuthenticated) {
+        return next();
+    }
+
+    response.redirect('/posts');
+}
+
 function isAdminUser(request, response, next) {
     if ((request.user && request.user.accessLevel === "Admin") && request.isAuthenticated()) {
         return next();

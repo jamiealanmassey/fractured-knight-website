@@ -16,6 +16,19 @@ function retrieveRequest(request, response) {
         });
 }
 
+function retrieveSingleRequest(request, response) {
+    Post.findOne({_id: request.params.id})
+        .populate('author')
+        .populate('editedBy')
+        .exec(function(error, post) {
+            if (error) {
+                console.log(JSON.stringify(post, null, '\t'));
+            }
+
+            response.render('post', { post: post });
+        });
+}
+
 function retrieveEditRequest(request, response) {
     Post.findOne({_id: request.params.id}, function(error, post) {
         if (error) {
@@ -72,6 +85,14 @@ function postRequest(request, response) {
     });
 }
 
+function isUser(request, response, next) {
+    if (request.isAuthenticated) {
+        return next();
+    }
+
+    response.redirect('/posts');
+}
+
 function isAdminUser(request, response, next) {
     if ((request.user && request.user.accessLevel === "Admin") && request.isAuthenticated()) {
         return next();
@@ -86,6 +107,7 @@ router.get('/posts/new', isAdminUser, function(request, response) {
 
 router.delete('/posts/:id', isAdminUser, deleteRequest);
 router.get('/posts', retrieveRequest);
+router.get('/posts/:id', retrieveSingleRequest);
 router.get('/posts/:id/edit', isAdminUser, retrieveEditRequest);
 router.put('/posts/:id/edit', isAdminUser, updateEditRequest);
 router.post('/posts', isAdminUser, postRequest);

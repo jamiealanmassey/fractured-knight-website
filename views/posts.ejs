@@ -13,7 +13,14 @@
         <%= tag %>&nbsp;
         <% }) %>
         <div class="posts-buttons">
-            <a href="/">Read More</a>
+            <div class="comment-widget">
+                0 Comments
+            </div>
+            <a href="/post/<%=post._id%>">
+                <div class="ui inverted button tiny green">
+                    Read More
+                </div>
+            </a>
         </div>
         <% if (currentUser && currentUser.accessLevel === "Admin") { %>
             <div class="posts-buttons">

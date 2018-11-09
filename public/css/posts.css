@@ -66,6 +66,14 @@ body {
   display: inline;
 }
 
+.comment-widget {
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline;
+    letter-spacing: 1.5px;
+    font-size: 0.9em;
+}
+
 #footer-container {
   width: 100%;
   background-color: #151515;

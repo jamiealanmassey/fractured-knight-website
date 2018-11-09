@@ -1,5 +1,5 @@
-<% include partials/header %>
-<% include partials/header-nav %>
+<% include ../partials/header %>
+<% include ../partials/header-nav %>
         <div class="posts-container">
             <img src="<%=post.image%>">
             <div class="post">
@@ -8,6 +8,7 @@
                 <h4>by <%= post.author.firstname %> <%= post.author.lastname %></h4>
                 <div class="created"><%= new Date(post.created).toDateString() %></div>
                 <p><%= post.content %></p>
+                <p><%= post.comments %></p>
                 <div class="ui divider"></div>
                 <a href="/posts">
                     <div class="ui inverted button small blue">

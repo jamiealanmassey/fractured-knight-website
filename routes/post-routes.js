@@ -12,7 +12,7 @@ function retrieveRequest(request, response) {
                 console.log(JSON.stringify(posts, null, '\t'));
             }
 
-            response.render('posts', { posts: posts });
+            response.render('posts/all', { posts: posts });
         });
 }
 
@@ -25,7 +25,7 @@ function retrieveSingleRequest(request, response) {
                 console.log(JSON.stringify(post, null, '\t'));
             }
 
-            response.render('post', { post: post });
+            response.render('posts/post', { post: post });
         });
 }
 
@@ -34,7 +34,7 @@ function retrieveEditRequest(request, response) {
         if (error) {
             console.log("/posts/:id/edit GET failed");
         } else {
-            response.render("posts-edit", {post: post});
+            response.render("posts/edit", {post: post});
         }
     });
 }
@@ -78,7 +78,7 @@ function postRequest(request, response) {
         author: request.user._id
     }, function(error, post) {
         if (error) {
-            response.render('posts-new');
+            response.render('posts/new');
         } else {
             response.redirect('/posts');
         }
@@ -102,14 +102,14 @@ function isAdminUser(request, response, next) {
 }
 
 router.get('/posts/new', isAdminUser, function(request, response) {
-  response.render("posts-new");
+  response.render("posts/new");
 });
 
-router.delete('/posts/:id', isAdminUser, deleteRequest);
-router.get('/posts', retrieveRequest);
-router.get('/posts/:id', retrieveSingleRequest);
-router.get('/posts/:id/edit', isAdminUser, retrieveEditRequest);
-router.put('/posts/:id/edit', isAdminUser, updateEditRequest);
-router.post('/posts', isAdminUser, postRequest);
+router.get('/', retrieveRequest);
+router.post('/', isAdminUser, postRequest);
+router.delete('/:id', isAdminUser, deleteRequest);
+router.get('/:id', retrieveSingleRequest);
+router.get('/:id/edit', isAdminUser, retrieveEditRequest);
+router.put('/:id/edit', isAdminUser, updateEditRequest);
 
 module.exports = router;

@@ -1,5 +1,5 @@
-<% include partials/header %>
-<% include partials/header-nav %>
+<% include ../partials/header %>
+<% include ../partials/header-nav %>
 <% posts.forEach(function(post) {%>
 <div class="posts-container">
     <img src="<%=post.image%>">
@@ -24,12 +24,12 @@
         </div>
         <% if (currentUser && currentUser.accessLevel === "Admin") { %>
             <div class="posts-buttons">
-                <a href="/posts/<%=post._id%>/edit">
+                <a href="/posts/<%= post._id %>/edit">
                     <div class="ui inverted button small blue">
                         Update Post
                     </div>
                 </a>
-                <form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+                <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
                     <button class="ui inverted button small red">Delete Post</button>
                 </form>
             </div>
@@ -37,4 +37,4 @@
     </div>
 </div>
 <% }) %>
-<% include partials/footer %>
+<% include ../partials/footer %>

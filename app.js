@@ -17,7 +17,7 @@ app.use(session({
 }));
 
 app.set('view engine', 'ejs'); // Tells express to use ejs to render our web pages server-side
-app.use(express.static("public")); // Creates a static directory in 'public' that is unchanging
+app.use(express.static('public')); // Creates a static directory in 'public' that is unchanging
 app.use(bodyParser.urlencoded({extended: true})); // Sets up body parser for RESTful APIs
 app.use(methodOverride('_method')); // Tells express to use method-overriding e.g. ?_method=PUT
 app.use(passport.initialize()); // Sets up passport to be used by express as a plugin container

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const identify = require('./identify');
 const Post = mongoose.model('Post');
 const express = require('express');
 const router = express.Router();
@@ -20,6 +21,7 @@ function retrieveSingleRequest(request, response) {
     Post.findOne({_id: request.params.id})
         .populate('author')
         .populate('editedBy')
+        .populate('comments.postedBy')
         .exec(function(error, post) {
             if (error) {
                 console.log(JSON.stringify(post, null, '\t'));
@@ -85,31 +87,15 @@ function postRequest(request, response) {
     });
 }
 
-function isUser(request, response, next) {
-    if (request.isAuthenticated) {
-        return next();
-    }
-
-    response.redirect('/posts');
-}
-
-function isAdminUser(request, response, next) {
-    if ((request.user && request.user.accessLevel === "Admin") && request.isAuthenticated()) {
-        return next();
-    }
-
-    response.redirect('/posts');
-}
-
-router.get('/posts/new', isAdminUser, function(request, response) {
+router.get('/posts/new', identify.isUserAdmin, function(request, response) {
   response.render("posts/new");
 });
 
-router.get('/', retrieveRequest);
-router.post('/', isAdminUser, postRequest);
-router.delete('/:id', isAdminUser, deleteRequest);
-router.get('/:id', retrieveSingleRequest);
-router.get('/:id/edit', isAdminUser, retrieveEditRequest);
-router.put('/:id/edit', isAdminUser, updateEditRequest);
+router.get('/posts', retrieveRequest);
+router.post('/posts', identify.isUserAdmin, postRequest);
+router.delete('/posts/:id', identify.isUserAdmin, deleteRequest);
+router.get('/posts/:id', retrieveSingleRequest);
+router.get('/posts/:id/edit', identify.isUserAdmin, retrieveEditRequest);
+router.put('/posts/:id/edit', identify.isUserAdmin, updateEditRequest);
 
 module.exports = router;

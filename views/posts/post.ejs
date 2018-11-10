@@ -8,13 +8,50 @@
                 <h4>by <%= post.author.firstname %> <%= post.author.lastname %></h4>
                 <div class="created"><%= new Date(post.created).toDateString() %></div>
                 <p><%= post.content %></p>
-                <p><%= post.comments %></p>
+                <div class="ui comments">
+                    <h3 class="ui dividing header">Comments</h3>
+                    <% if (post.comments.length === 0) { %>
+                        <p>No comments to show</p>
+                    <% } %>
+                    <% post.comments.forEach(function(comment) { %>
+                        <div class="comment">
+                            <a class="author"><%= comment.postedBy.firstname %> <%= comment.postedBy.lastname %></a>
+                        </div>
+                        <div class="text">
+                            <p><%= comment.text %></p>
+                        </div>
+                    <% }); %>
+                </div>
+                <% if (currentUser) { %>
                 <div class="ui divider"></div>
-                <a href="/posts">
-                    <div class="ui inverted button small blue">
-                        Back to Posts
+                <form class="ui form" action="/posts/<%= post._id %>/comments" method="POST">
+                    <div class="field">
+                        <textarea name="comment[content]" draggable="false"></textarea>
                     </div>
-                </a>
+                    <button class="ui submit labeled icon button red" type="submit">
+                        <i class="icon edit"></i>
+                        Add Comment
+                    </button>
+                </form>
+                <% } %>
+                <div class="ui divider"></div>
+                <div class="posts-buttons">
+                    <a href="/posts">
+                        <div class="ui inverted button tiny orange">
+                            Back to Posts
+                        </div>
+                    </a>
+                    <% if (currentUser && currentUser.accessLevel === "Admin") { %>
+                    <a href="/posts/<%= post._id %>/edit">
+                        <div class="ui inverted button tiny blue">
+                            Update Post
+                        </div>
+                    </a>
+                    <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+                        <button class="ui inverted button tiny red">Delete Post</button>
+                    </form>
+                    <% } %>
+                </div>
             </div>
         </div>
     </body>

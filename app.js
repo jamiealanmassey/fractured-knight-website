@@ -43,8 +43,8 @@ passport.deserializeUser(User.deserializeUser());
 // --------------------------------------
 app.use('/', require('./routes/auth-routes'));
 app.use('/', require('./routes/index-routes'));
-app.use('/posts', require('./routes/post-routes'));
-app.use('/posts/:id/comments', require('./routes/comment-routes'));
+app.use(require('./routes/post-routes'));
+app.use(require('./routes/comment-routes'));
 
 // APP START
 // --------------------------------------

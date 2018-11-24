@@ -1,5 +1,7 @@
-const mongoose = require('mongoose');
+
+const sanitize = require('sanitize-html');
 const identify = require('./identify');
+const mongoose = require('mongoose');
 const Post = mongoose.model('Post');
 const express = require('express');
 const router = express.Router();
@@ -13,7 +15,7 @@ function retrieveRequest(request, response) {
                 console.log(JSON.stringify(posts, null, '\t'));
             }
 
-            response.render('posts/all', { posts: posts });
+            response.render('posts/all', { posts: posts, sanitize: sanitize });
         });
 }
 
@@ -27,7 +29,7 @@ function retrieveSingleRequest(request, response) {
                 console.log(JSON.stringify(post, null, '\t'));
             }
 
-            response.render('posts/post', { post: post });
+            response.render('posts/post', { post: post, sanitize: sanitize });
         });
 }
 
@@ -36,7 +38,7 @@ function retrieveEditRequest(request, response) {
         if (error) {
             console.log("/posts/:id/edit GET failed");
         } else {
-            response.render("posts/edit", {post: post});
+            response.render("posts/edit", { post: post });
         }
     });
 }

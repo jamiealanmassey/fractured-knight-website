@@ -25,9 +25,7 @@ router.get('/', function(request, response) {
                 if (statistics === null) {
                     statistics = { downloads: 0 };
                 }
-                
-                console.log(statistics);
-                console.log(statistics.downloads);
+
                 response.render('index', { statistics: statistics });
             }
         });

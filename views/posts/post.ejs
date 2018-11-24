@@ -7,7 +7,7 @@
                 <h3><%= post.subheading %></h3>
                 <h4>by <%= post.author.firstname %> <%= post.author.lastname %></h4>
                 <div class="created"><%= new Date(post.created).toDateString() %></div>
-                <p><%= post.content %></p>
+                <p><%- sanitize(post.content, { allowedTags: sanitize.defaults.allowedTags.concat([ 'img' ]) }); %></p>
                 <div class="ui comments">
                     <h3 class="ui dividing header">Comments</h3>
                     <% if (post.comments.length === 0) { %>

@@ -1,4 +1,3 @@
-
 module.exports = {
     isUser: function(request, response, next) {
         if (request.isAuthenticated) {

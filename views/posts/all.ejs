@@ -8,7 +8,8 @@
         <h3><%= post.subheading %></h3>
         <h4>by <%= post.author.firstname %> <%= post.author.lastname %></h4>
         <div class="created"><%= new Date(post.created).toDateString() %></div>
-        <p><%= post.content %></p>
+        <p><%- sanitize(post.content.substring(Math.min(post.content.length, 1000))); %></p>
+        <p class="dot">&hellip;</p>
         <% post.tags.forEach(function(tag) {%>
         <%= tag %>&nbsp;
         <% }); %>

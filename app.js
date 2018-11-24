@@ -32,6 +32,7 @@ app.use(function(request, response, next) {
 // --------------------------------------
 var User = require('./models/user');
 var Post = require('./models/post');
+var Statistic = require('./models/statistic');
 
 // SETUP AUTHENTICATION
 // --------------------------------------

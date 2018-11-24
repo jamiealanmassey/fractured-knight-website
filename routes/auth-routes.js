@@ -5,12 +5,25 @@ const express = require('express');
 const User = mongoose.model('User');
 const Router = express.Router();
 
+function usernameToLowerCase(request, response, next){
+    if (request.body.user && request.body.user.username) {
+        request.body.user.username = request.body.user.username.toLowerCase();
+        next();
+    } else if (request.body.username) {
+        console.log("body: " + request.body);
+        console.log("username: " + request.body.username);
+
+        request.body.username = request.body.username.toLowerCase();
+        next();
+    }
+}
+
 Router.get('/register', function(request, response) {
     response.render('register');
 });
 
-Router.post('/register', function(request, response) {
-    var username = request.body.user.email.toLowerCase();
+Router.post('/register', usernameToLowerCase, function(request, response) {
+    var username = request.body.user.username;
     var password = request.body.user.password;
     var firstname = request.body.user.firstname;
     var lastname = request.body.user.lastname;
@@ -31,7 +44,7 @@ Router.get('/login', function(request, response) {
     response.render('login');
 });
 
-Router.post('/login', passport.authenticate('local', {
+Router.post('/login', usernameToLowerCase, passport.authenticate('local', {
     successRedirect: '/posts',
     failureRedirect: '/login'
 }), function(request, response) {

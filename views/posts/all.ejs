@@ -1,6 +1,6 @@
-<% include partials/header %>
-<% include partials/header-nav %>
-<% posts.forEach(function(post) {%>
+<% include ../partials/header %>
+<% include ../partials/header-nav %>
+<% posts.forEach(function(post) { %>
 <div class="posts-container">
     <img src="<%=post.image%>">
     <div class="post">
@@ -11,30 +11,28 @@
         <p><%= post.content %></p>
         <% post.tags.forEach(function(tag) {%>
         <%= tag %>&nbsp;
-        <% }) %>
-        <div class="posts-buttons">
+        <% }); %>
+        <div class="posts-buttons right">
             <div class="comment-widget">
-                0 Comments
+                <%= post.comments.length %> Comments
             </div>
             <a href="/posts/<%=post._id%>">
                 <div class="ui inverted button tiny green">
                     Read More
                 </div>
             </a>
-        </div>
-        <% if (currentUser && currentUser.accessLevel === "Admin") { %>
-            <div class="posts-buttons">
-                <a href="/posts/<%=post._id%>/edit">
-                    <div class="ui inverted button small blue">
+            <% if (currentUser && currentUser.accessLevel === "Admin") { %>
+                <a href="/posts/<%= post._id %>/edit">
+                    <div class="ui inverted button tiny blue">
                         Update Post
                     </div>
                 </a>
-                <form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                    <button class="ui inverted button small red">Delete Post</button>
+                <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+                    <button class="ui inverted button tiny red">Delete Post</button>
                 </form>
-            </div>
-        <% } %>
+            <% } %>
+        </div>
     </div>
 </div>
 <% }) %>
-<% include partials/footer %>
+<% include ../partials/footer %>

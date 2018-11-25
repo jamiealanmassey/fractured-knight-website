@@ -25,7 +25,6 @@ Router.get('/register', function(request, response) {
 Router.post('/register', usernameToLowerCase, function(request, response, next) {
     var user = new User({
         username: request.body.username,
-        password: request.body.password,
         firstname: request.body.firstname,
         lastname: request.body.lastname
     });

@@ -16,11 +16,6 @@
                     <% post.comments.forEach(function(comment) { %>
                         <div id="<%= comment._id %>" class="comment">
                             <a class="author"><%= comment.postedBy.firstname %> <%= comment.postedBy.lastname %></a>
-                            <!--<% if (currentUser && currentUser._id.equals(comment.postedBy._id)) { %>
-                                <form action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                                    <button class="ui button tiny"><i class="trash icon"></i></button>
-                                </form>
-                            <% } %>-->
                         </div>
                         <div class="text">
                             <p><%= comment.text %></p>

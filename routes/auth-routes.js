@@ -22,23 +22,25 @@ Router.get('/register', function(request, response) {
     response.render('register');
 });
 
-Router.post('/register', usernameToLowerCase, function(request, response) {
-    var username = request.body.user.username;
-    var password = request.body.user.password;
-    var firstname = request.body.user.firstname;
-    var lastname = request.body.user.lastname;
+Router.post('/register', usernameToLowerCase, function(request, response, next) {
+    var user = new User({
+        username: request.body.user.username,
+        firstname: request.body.user.firstname,
+        lastname: request.body.user.lastname
+    });
 
-    User.register(new User({ username: username, firstname: firstname, lastname: lastname }), password, function(error, user) {
+    User.register(user, request.body.user.password, function(error, user) {
         if (error) {
             console.log(error);
-            return response.render('register');
+        } else {
+            console.log("user is " + request.user);
+            next();
         }
-
-        passport.authenticate('local')(request, response, function() {
-            response.redirect('/posts');
-        });
     });
-});
+}, passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/posts'
+}));
 
 Router.get('/login', function(request, response) {
     response.render('login');

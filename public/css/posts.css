@@ -71,6 +71,10 @@ body {
   display: inline;
 }
 
+.modal form {
+    display: inline;
+}
+
 .comment-widget {
     margin-left: 10px;
     margin-right: 10px;

@@ -52,9 +52,8 @@
                             Update Post
                         </div>
                     </a>
-                    <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-                        <button class="ui inverted button tiny red">Delete Post</button>
-                    </form>
+                    <button class="ui inverted button tiny red" onclick="executeDeleteModal('<%= post._id %>')">Delete Post</button>
+                    <%- include('../partials/delete-modal', { post: post, id: post._id }); %>
                     <% } %>
                 </div>
             </div>
